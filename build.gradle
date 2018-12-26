@@ -1,0 +1,28 @@
+plugins {
+    id 'org.spongepowered.plugin' version '0.8.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+group = pluginGroup
+version = pluginVersion
+ext.teslaversion = '1.1.4'
+
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+dependencies {
+    compile 'org.spongepowered:spongeapi:7.0.0'
+    implementation "com.github.SimonFlash.TeslaPowered:TeslaLibs:v${teslaversion}"
+}
+
+shadowJar {
+    dependencies {
+        include dependency("com.github.SimonFlash.TeslaPowered:TeslaLibs:v${teslaversion}")
+    }
+    relocate 'com.mcsimonflash', 'xyz.pokepalooza.relocate'
+}
+
+build.dependsOn(shadowJar)
+sponge.plugin.id = pluginId
